@@ -13,7 +13,7 @@ link_to_homedir() {
     command mkdir "$HOME/.dotbackup"
   fi
 
-  local dot_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+  local dotdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
   
   if [[ "$HOME" != "$dotdir" ]];then
     for f in $dotdir/.??*; do
