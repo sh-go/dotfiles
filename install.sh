@@ -13,20 +13,16 @@ link_to_homedir() {
     command mkdir "$HOME/.dotbackup"
   fi
 
-  local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-  local dotdir=$(dirname ${script_dir})
-  echo "script_dir = $script_dir"
-  echo "dotdir     = $dotdir"
-  echo "HOME       = $HOME"
-
+  local dot_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+  
   if [[ "$HOME" != "$dotdir" ]];then
     for f in $dotdir/.??*; do
-      [[ `basename $f` == ".git" ]] && continue
-      if [[ -L "$HOME/`basename $f`" ]];then
-        command rm -f "$HOME/`basename $f`"
+      [[ $(basename $f) == ".git" ]] && continue
+      if [[ -L "$HOME/$(basename $f)" ]];then
+        command rm -f "$HOME/$(basename $f)"
       fi
       if [[ -e "$HOME/`basename $f`" ]];then
-        command mv "$HOME/`basename $f`" "$HOME/.dotbackup"
+        command mv "$HOME/$(basename $f)" "$HOME/.dotbackup"
       fi
       command ln -snf $f $HOME
     done
